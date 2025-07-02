@@ -1,4 +1,4 @@
-<h1>Minishell</h1>
+<h1>Custom shell interpreter</h1>
 
 <p id="description">Build a BASH-like command line interpreter in C</p>
 
