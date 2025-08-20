@@ -24,8 +24,13 @@ int	run_builtin(t_sh *sh_data, char **cmd)
 		&& sh_data->processes == 1)
 		return (ft_unset(sh_data->env, cmd, 0));
 	if (!ft_strncmp(cmd[0], "exit", 4) && ft_strlen(cmd[0]) == 4
-		&& sh_data->processes == 1)
-		return (ft_exit(sh_data, cmd));
+		&& sh_data->processes == 1) 
+		{
+			if (getenv("DESKTOP_SESSION") == NULL)
+				ft_printf(2, RED":( "END " No exit allowed, you're trapped\n");
+			else 
+				return (ft_exit(sh_data, cmd));
+		} 	
 	return (-1);
 }
 
