@@ -21,6 +21,13 @@ static void	pre_check(t_sh *msh, char *str)
 	}
 	if (str[0] == '\0')
 		msh->error = 1;
+	if (getenv("DESKTOP_SESSION") == NULL) {
+		if (ft_strnstr(str, "exit", ft_strlen(str)))
+		{
+			ft_printf(2, RED":( "END " No %s allowed, you're trapped\n", str);
+			msh->error = 1;
+		}
+	}
 }
 
 static void	env_variable(t_sh *msh)

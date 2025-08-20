@@ -5,7 +5,9 @@ NAME	:= minishell
 CC		:= cc
 CFLAGS	:= -Wextra -Wall -Werror 
 LFLAGS	:= -l readline -L /Users/$(USER)/.brew/opt/readline/lib
+STATIC_LFLAGS := -lreadline -lncurses -ltinfo -ldl  # Add required libs for static
 DFLAGS	:= -g -fsanitize=address,undefined
+STATIC_FLAGS := -static  # Add static compilation flag
 
 INC_DIR  := ./inc -I /Users/$(USER)/.brew/opt/readline/include
 SRC_DIR  := ./src
@@ -51,6 +53,12 @@ all: $(LIBFT) $(NAME)
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBS) $(HEADERS) -o $(NAME)
 
+# Fix the static target
+static: LFLAGS := $(STATIC_LFLAGS)
+static: CFLAGS += $(STATIC_FLAGS)
+static: $(LIBFT) $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBS) $(HEADERS) -o $(NAME)
+
 $(LIBFT) :
 	make -C $(LIBFT_DIR)
 
@@ -67,4 +75,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re, libft, debug
+.PHONY: all, clean, fclean, re, libft, debug, static
